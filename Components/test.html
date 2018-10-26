@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="bower_components/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <my-aaa></my-aaa> -->
+        <!-- 动态组件 -->
+        <!-- 嵌套组件 -->
+        <!-- 父子组件之间的通信 -->
+        <input type="button" value="aaa" v-on:click="a='aaa'">
+        <input type="button" value="bbb" v-on:click="a='bbb'">
+        <component :is="a"></component>
+    </div>
+    <script type="text/javascript">
+    // 全局组件
+    Vue.component('my-aaa', {
+        template: '<h1>我是标题</h1>'
+    });
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            a: "aaa"
+        },
+        methods: {
+
+        },
+        //动态组件
+        components: {
+            "aaa": {
+            	data(){
+            		return {msg:"我是父组件的数据"}
+            	},
+                template: "<h2>我是aaa组件<ccc></ccc></h2>",
+                components: {
+                    "ccc": {
+                        template: "<h4>我是ccc组件</h4>"
+                    }
+                }
+            },
+            "bbb": {
+                data() {
+                    return {};
+                },
+                methods: {},
+                template: "<h2>我是bbb组件</h2>"
+            }
+        }
+        // 局部组件
+        // components: {
+        //     "my-aaa": {
+        //         data() {
+        //             return {
+        //                 msg: "我是标题"
+        //             };
+        //         },
+        //         methods: {
+        //             set: function() {
+        //                 this.msg = "哈哈哈"
+        //             }
+        //         },
+        //         template: "<h1 v-on:click='set'>{{msg}}</h1>"
+        //     }
+        // }
+    });
+    </script>
+</body>
+
+</html>

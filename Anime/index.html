@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script type="text/javascript" src="bower_components/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="bower_components/animate.css">
+    <style type="text/css">
+    #app{
+    	text-align: center;
+    }
+    .cl {
+    	margin: 0 auto;
+        width: 100px;
+        height: 100px;
+        background-color: red;
+    }
+
+    /*.fade-transition{
+    	transition: 1s all ease;
+    }
+    .fade-enter{
+    	opacity: 0;
+    	transform: translateX(200px);
+    }
+    .fade-leave{
+    	opacity: 0;
+    	transform: translateX(200px);
+    }*/
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="按钮" v-on:click="set">
+        <div class="cl animated" v-show="isshow" transition="bounce">
+        </div>
+    </div>
+    <script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            isshow: true
+        },
+        methods: {
+            set: function() {
+                this.isshow = !this.isshow;
+            }
+        },
+        transitions: {
+            bounce: {
+                enterClass: 'zoomInLeft',
+                leaveClass: 'zoomOutLeft'
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>
