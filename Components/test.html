@@ -13,44 +13,64 @@
         <!-- 动态组件 -->
         <!-- 嵌套组件 -->
         <!-- 父子组件之间的通信 -->
-        <input type="button" value="aaa" v-on:click="a='aaa'">
+      <!--   <input type="button" value="aaa" v-on:click="a='aaa'">
         <input type="button" value="bbb" v-on:click="a='bbb'">
-        <component :is="a"></component>
+        <component :is="a"></component> -->
+        <aaa></aaa>
     </div>
     <template id="aaa">
         <h2>{{msg}}</h2>
-        <ccc :m=msg :mmm=msg2></ccc>
+        <!-- <ccc :m=msg :mmm=msg2></ccc> -->
+        <ccc @dd="get"></ccc>
+    </template>
+    <template id="ccc">
+        <input type="button" @click="send" value="send">
     </template>
     <script type="text/javascript">
     // 全局组件
-    Vue.component('my-aaa', {
-        template: '<h1>我是标题</h1>'
-    });
+    // Vue.component('my-aaa', {
+    //     template: '<h1>我是标题</h1>'
+    // });
     var vm = new Vue({
         el: "#app",
         data: {
-            a: "aaa"
-        },
-        methods: {
-
+            a: "aaa",
         },
         //动态组件
         components: {
             "aaa": {
                 data() {
                     return {
-                        msg2:"哈哈哈哈",
+                        msg2: "哈哈哈哈",
                         msg: "我是父组件的数据"
                     }
                 },
                 template: "#aaa",
+                methods: {
+                    get(msg) {
+                        alert(1);
+                        // this.msg = n;
+                    }
+                },
                 components: {
                     "ccc": {
-                        props:['m','mmm'],
+                        data() {
+                            return {
+                                cmsg: "我是子组件的数据"
+                            };
+                        },
+                        // props: ['m', 'mmm'],
                         // props: {
                         //     'm': String
                         // },
-                        template: "<h4>我是ccc组件=>{{m}}<br>{{mmm}}</h4>"
+                        template: "#ccc",
+                        // template: "<h4>我是ccc组件=>{{m}}<br>{{mmm}}</h4>"
+                        methods: {
+                            send() {
+                                // 发送数据
+                                this.$emit('dd', this.cmsg);
+                            }
+                        }
                     }
                 }
             },
