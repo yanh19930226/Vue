@@ -6,29 +6,72 @@
     <title>Document</title>
     <script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+    <style type="text/css">
+    .router-link-active {
+        color: red;
+        font-size: 100px;
+    }
+    </style>
 </head>
-
 <body>
     <div id="box">
         <router-link to="/home">主页</router-link>
-        <router-link to="/news">新闻</router-link>
+        <router-link to="/user">用户</router-link>
         <div>
             <router-view></router-view>
         </div>
     </div>
 </body>
+<!-- 用户模板 -->
+<template id="user">
+    <div>
+        <h1>我是用户</h1>
+        <ul>
+            <li>
+                <router-link to="/user/james/age/29">詹姆斯</router-link>
+            </li>
+             <li>
+                <router-link to="/user/kobe/age/33">科比</router-link>
+            </li>
+             <li>
+                <router-link to="/user/md/age/24">麦迪</router-link>
+            </li>
+        </ul>
+        <div>
+            <router-view></router-view>
+        </div>
+    </div>
+</template>
+<!-- 用户详细组件 -->
+<template id="userdetail">
+	<div>
+		{{$route.params}}
+	</div>
+</template>
 <script type="text/javascript">
+//主页组件
 var Home = {
     template: "<h1>我是主页</h1>"
 };
-var News = {
-    template: "<h1>我是新闻</h1>"
+//用户组件
+var User = {
+    template: "#user"
 };
+//用戶詳細组件
+var UserDetail = {
+    template: "#userdetail"
+}
 
 //配置路由
 var routes = [
     { path: '/home', component: Home },
-    { path: '/news', component: News },
+    {
+        path: '/user',
+        component: User,
+        children: [
+            { path: ':username/age/:age', component:UserDetail }
+        ]
+    },
     { path: '*', redirect: "/home" }
 ];
 //生成路由
