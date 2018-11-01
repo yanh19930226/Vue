@@ -6,6 +6,7 @@
     <title>Document</title>
     <script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.1/vue-router.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/animate.css/animate.css">
     <style type="text/css">
     .router-link-active {
         color: red;
@@ -13,12 +14,15 @@
     }
     </style>
 </head>
+
 <body>
     <div id="box">
         <router-link to="/home">主页</router-link>
         <router-link to="/user">用户</router-link>
         <div>
-            <router-view></router-view>
+            <transition enter-active-class="animated bounceInLeft" leave-active-class="animated bounceOut">
+                <router-view></router-view>
+            </transition>
         </div>
     </div>
 </body>
@@ -30,10 +34,10 @@
             <li>
                 <router-link to="/user/james/age/29">詹姆斯</router-link>
             </li>
-             <li>
+            <li>
                 <router-link to="/user/kobe/age/33">科比</router-link>
             </li>
-             <li>
+            <li>
                 <router-link to="/user/md/age/24">麦迪</router-link>
             </li>
         </ul>
@@ -44,9 +48,9 @@
 </template>
 <!-- 用户详细组件 -->
 <template id="userdetail">
-	<div>
-		{{$route.params}}
-	</div>
+    <div>
+        {{$route.params}}
+    </div>
 </template>
 <script type="text/javascript">
 //主页组件
@@ -69,7 +73,7 @@ var routes = [
         path: '/user',
         component: User,
         children: [
-            { path: ':username/age/:age', component:UserDetail }
+            { path: ':username/age/:age', component: UserDetail }
         ]
     },
     { path: '*', redirect: "/home" }
