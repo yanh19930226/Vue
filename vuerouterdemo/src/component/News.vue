@@ -2,7 +2,9 @@
   <div>
     <span>我是新闻</span>
     <ul>
-      <li v-for="item in newsList">{{item}}</li>
+      <li v-for="item in newsList">
+      	<router-link to="/newsdetail">{{item}}</router-link>
+      </li>
     </ul>
     <div>
     	<router-view></router-view>
@@ -19,8 +21,8 @@ export default {
     }
 }
 </script>
-<style scoped>
-li{
+<style>
+ul,li{
 	list-style: none;
 }
 </style>
