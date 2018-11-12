@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<template id="a">
+	<div>
+		<span>
+			我是A组件
+		</span>
+		{{a}}
+		<input type="button" value="把A数据给C" v-on:click="send">
+	</div>
+</template>
+<template id="b">
+	<div>
+		<span>
+			我是B组件
+		</span>
+		{{b}}
+		<input type="button" value="把B数据给C" v-on:click="send"/>
+	</div>
+</template>
+<template id="c">
+	<div>
+		<span>
+			我是C组件
+		</span>
+		{{c}}
+		{{cc}}
+		{{dd}}
+	</div>
+</template>
+<body>
+	<div id="app">
+		<com-a></com-a>
+		<com-b></com-b>
+		<com-c></com-c>
+	</div>
+	<script type="text/javascript" src="bower_components/vue/dist/vue.js"></script>
+	<script type="text/javascript">
+		var Event=new Vue();
+
+		var A={
+			template:"#a",
+			data(){
+                   return {
+                   	a:'我是a数据'
+                   }
+			},
+			methods:{
+				send(){
+					Event.$emit('a-msg',this.a);
+				}
+			}
+		};
+		var B={
+			template:"#b",
+			data(){
+                return {
+                   	b:'我是b数据'
+                   }
+			},
+			methods:{
+				send(){
+					Event.$emit('b-msg',this.b);
+				}
+			}
+		};
+		var C={
+			template:"#c",
+			data(){
+                   return {
+                   	 cc:'',
+                   	 dd:'',
+                   	 c:'我是c数据'
+                 }
+			},
+			mounted(){
+                 Event.$on('a-msg',function(a){
+                     this.cc=a;
+                 }.bind(this));
+                  Event.$on('b-msg',function(b){
+                     this.dd=b;
+                 }.bind(this));
+			}
+		};
+		var vm=new Vue({
+			el:"#app",
+			data:{
+
+			},
+			components:{
+				'com-a':A,
+				'com-b':B,
+				'com-c':C
+			},
+			methods:{
+
+
+			}
+		});
+	</script>
+</body>
+</html>
