@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
+</head>
+<template id="child">
+	<div>
+		{{msg.a}}
+		<input type="button" value="修改" v-on:click="change">
+	</div>
+</template>
+<body>
+	<div id="app">
+		父级：{{giveData.a}}
+		<br>
+		<child-com :msg="giveData">
+			
+		</child-com>
+	</div>
+	<script type="text/javascript">
+		var Vue=new Vue({
+			el:"#app",
+			data:{
+               giveData:{
+               	 a:"我是父组件的数据"
+               }
+			},
+			components:{
+				'child-com':{
+					props:['msg'],
+					template:"#child",
+					methods:{
+						change(){
+                             this.msg.a="被修改了"
+						}
+					}
+				}
+			},
+			methods:{
+
+			}
+		});
+	</script>
+</body>
+</html>
